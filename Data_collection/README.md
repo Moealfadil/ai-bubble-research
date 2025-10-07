@@ -16,10 +16,10 @@ Data_collection/
 └── aiq_holdings/                                # Raw daily holdings data (568 files)
     ├── aiq_20200808.csv
     ├── aiq_20200927.csv
-    └── ... (daily files from 2020-2025)
+    └── ... (files from 2020-2025)
 ```
 
-## 🔧 Scripts and Tools
+## Scripts and Tools
 
 ### 1. `downloading_GlobalX_AIQ_holdings_datasets_23_25.py`
 
@@ -81,7 +81,7 @@ python merge_tickers.py
 - Maps ticker symbols to proper Yahoo Finance formats
 - Generates IPO date distribution charts
 
-## 📊 Data Description
+## Data Description
 
 ### Holdings Data Format
 
@@ -99,7 +99,7 @@ Each daily holdings file (`aiq_YYYYMMDD.csv`) contains:
 - Mix of US and international stocks (HK, KS, GR exchanges)
 - Companies span various AI sectors: semiconductors, cloud computing, e-commerce, software
 
-## 🎯 Research Applications
+## Research Applications
 
 This data collection supports research into:
 
@@ -109,7 +109,7 @@ This data collection supports research into:
 4. **IPO Impact Studies**: Performance of recently listed AI companies
 5. **Cross-Market Analysis**: International AI stock performance comparison
 
-## 📈 Data Timeline
+## Data Timeline
 
 - **Primary Period**: 2023-2025 (daily data)
 - **Extended Period**: Some 2020-2022 data available (obtained via Wayback Machine)
@@ -118,7 +118,7 @@ This data collection supports research into:
   - 2023-2025: GlobalX AI & Innovation ETF (AIQ) official holdings API
   - 2020-2022: Historical data retrieved from Wayback Machine archived pages
 
-## 🔄 Data Updates
+## Data Updates
 
 The data collection can be extended by:
 
@@ -126,7 +126,7 @@ The data collection can be extended by:
 2. Re-running the ticker merge process to capture new holdings
 3. Updating IPO analysis for newly added companies
 
-## 📋 Dependencies
+## Dependencies
 
 - **Python 3.7+**
 - **pandas**: Data manipulation
@@ -135,7 +135,7 @@ The data collection can be extended by:
 - **matplotlib**: Visualization (for notebook)
 - **zipfile**: Archive creation
 
-## 🚀 Getting Started
+## Getting Started
 
 1. **Install dependencies**:
 
@@ -158,7 +158,7 @@ The data collection can be extended by:
 4. **Analyze IPO dates** (optional):
    Open and run `tickers_IPO_analysis.ipynb` in Jupyter
 
-## 📝 Notes
+## Notes
 
 - Holdings data reflects the actual composition of the GlobalX AI & Innovation ETF
 - Some international tickers may require format adjustments for Yahoo Finance compatibility
