@@ -1,15 +1,14 @@
 import datetime
 import os
 import zipfile
-
 import requests
 
 # Create output folder
 out_dir = "aiq_holdings"
 os.makedirs(out_dir, exist_ok=True)
 
-# Date range for 2023
-start_date = datetime.date(2015, 1, 1)
+# Date range for 2023 to 2025
+start_date = datetime.date(2023, 1, 1)
 end_date = datetime.date(2025, 9, 30)
 
 delta = datetime.timedelta(days=1)
