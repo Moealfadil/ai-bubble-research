@@ -1,0 +1,7 @@
+/docs/
+/scripts/__pycache__/
+/scripts/check_all_keys.py
+/scripts/fix_market_cap.py
+
+# Environment variables (contains API keys)
+.env
