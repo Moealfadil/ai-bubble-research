@@ -31,7 +31,7 @@ if not API_KEY:
     exit(1)
 
 # Rate limiting
-RATE_LIMIT_DELAY = 15  # seconds between API calls
+RATE_LIMIT_DELAY = 1  # seconds between API calls
 
 # File paths
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -375,3 +375,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

@@ -42,7 +42,7 @@ COMPLETE_DATA_DIR = os.path.join(BASE_DIR, "complete_data_improved")  # For mark
 # Track API usage per key (4 calls per ticker, 25 calls per day per key = 6 tickers per key per day)
 api_call_counts = {key: 0 for key in API_KEYS}
 current_api_key_index = 0
-CALLS_PER_KEY_LIMIT = 25  # Free tier daily limit
+CALLS_PER_KEY_LIMIT = 400  # Free tier daily limit
 CALLS_PER_TICKER = 4  # Income Statement + Earnings + Balance Sheet + Cash Flow
 
 # ==== CREATE OUTPUT DIRECTORY ====
