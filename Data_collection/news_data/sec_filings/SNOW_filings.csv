@@ -1,0 +1,61 @@
+ticker,filing_type,filing_date,accession_number,filing_url,ai_mentions_count,ai_keywords_found,ai_context_snippets,filing_title,status
+SNOW,10-Q,2025-09-05,0001640147-25-000187,https://www.sec.gov/Archives/edgar/data/0001640147/000164014725000187/snow-20250731.htm,0,,,10-Q - 2025-09-05,metadata_only
+SNOW,8-K,2025-09-03,0001640147-25-000181,https://www.sec.gov/Archives/edgar/data/0001640147/000164014725000181/snow-20250903.htm,0,,,8-K - 2025-09-03,metadata_only
+SNOW,8-K,2025-08-27,0001640147-25-000177,https://www.sec.gov/Archives/edgar/data/0001640147/000164014725000177/snow-20250827.htm,0,,,8-K - 2025-08-27,metadata_only
+SNOW,8-K,2025-07-03,0001640147-25-000150,https://www.sec.gov/Archives/edgar/data/0001640147/000164014725000150/snow-20250702.htm,0,,,8-K - 2025-07-03,metadata_only
+SNOW,10-Q,2025-05-30,0001640147-25-000110,https://www.sec.gov/Archives/edgar/data/0001640147/000164014725000110/snow-20250430.htm,0,,,10-Q - 2025-05-30,metadata_only
+SNOW,DEF 14A,2025-05-21,0001640147-25-000096,https://www.sec.gov/Archives/edgar/data/0001640147/000164014725000096/snow-20250520.htm,0,,,DEF 14A - 2025-05-21,metadata_only
+SNOW,8-K,2025-05-21,0001640147-25-000094,https://www.sec.gov/Archives/edgar/data/0001640147/000164014725000094/snow-20250521.htm,0,,,8-K - 2025-05-21,metadata_only
+SNOW,8-K,2025-05-08,0001640147-25-000078,https://www.sec.gov/Archives/edgar/data/0001640147/000164014725000078/snow-20250507.htm,0,,,8-K - 2025-05-08,metadata_only
+SNOW,10-K,2025-03-21,0001640147-25-000052,https://www.sec.gov/Archives/edgar/data/0001640147/000164014725000052/snow-20250131.htm,0,,,10-K - 2025-03-21,metadata_only
+SNOW,8-K,2025-03-06,0001640147-25-000027,https://www.sec.gov/Archives/edgar/data/0001640147/000164014725000027/snow-20250304.htm,0,,,8-K - 2025-03-06,metadata_only
+SNOW,8-K,2025-02-26,0001640147-25-000017,https://www.sec.gov/Archives/edgar/data/0001640147/000164014725000017/snow-20250225.htm,0,,,8-K - 2025-02-26,metadata_only
+SNOW,8-K,2025-02-26,0001640147-25-000016,https://www.sec.gov/Archives/edgar/data/0001640147/000164014725000016/snow-20250226.htm,0,,,8-K - 2025-02-26,metadata_only
+SNOW,10-Q,2024-11-27,0001640147-24-000250,https://www.sec.gov/Archives/edgar/data/0001640147/000164014724000250/snow-20241031.htm,0,,,10-Q - 2024-11-27,metadata_only
+SNOW,8-K,2024-11-20,0001640147-24-000242,https://www.sec.gov/Archives/edgar/data/0001640147/000164014724000242/snow-20241120.htm,0,,,8-K - 2024-11-20,metadata_only
+SNOW,8-K,2024-09-27,0001640147-24-000234,https://www.sec.gov/Archives/edgar/data/0001640147/000164014724000234/snow-20240923.htm,0,,,8-K - 2024-09-27,metadata_only
+SNOW,10-Q,2024-08-29,0001640147-24-000207,https://www.sec.gov/Archives/edgar/data/0001640147/000164014724000207/snow-20240731.htm,0,,,10-Q - 2024-08-29,metadata_only
+SNOW,8-K,2024-08-21,0001640147-24-000203,https://www.sec.gov/Archives/edgar/data/0001640147/000164014724000203/snow-20240821.htm,0,,,8-K - 2024-08-21,metadata_only
+SNOW,8-K,2024-07-05,0001640147-24-000193,https://www.sec.gov/Archives/edgar/data/0001640147/000164014724000193/snow-20240702.htm,0,,,8-K - 2024-07-05,metadata_only
+SNOW,8-K,2024-07-02,0001640147-24-000183,https://www.sec.gov/Archives/edgar/data/0001640147/000164014724000183/snow-20240630.htm,0,,,8-K - 2024-07-02,metadata_only
+SNOW,10-Q,2024-05-31,0001640147-24-000135,https://www.sec.gov/Archives/edgar/data/0001640147/000164014724000135/snow-20240430.htm,0,,,10-Q - 2024-05-31,metadata_only
+SNOW,DEF 14A,2024-05-22,0001640147-24-000123,https://www.sec.gov/Archives/edgar/data/0001640147/000164014724000123/snow-20240522.htm,0,,,DEF 14A - 2024-05-22,metadata_only
+SNOW,8-K,2024-05-22,0001640147-24-000122,https://www.sec.gov/Archives/edgar/data/0001640147/000164014724000122/snow-20240522.htm,0,,,8-K - 2024-05-22,metadata_only
+SNOW,10-K,2024-03-26,0001640147-24-000101,https://www.sec.gov/Archives/edgar/data/0001640147/000164014724000101/snow-20240131.htm,0,,,10-K - 2024-03-26,metadata_only
+SNOW,8-K,2024-02-28,0001640147-24-000033,https://www.sec.gov/Archives/edgar/data/0001640147/000164014724000033/snow-20240227.htm,0,,,8-K - 2024-02-28,metadata_only
+SNOW,8-K,2024-02-28,0001640147-24-000031,https://www.sec.gov/Archives/edgar/data/0001640147/000164014724000031/snow-20240227.htm,0,,,8-K - 2024-02-28,metadata_only
+SNOW,10-Q,2023-12-01,0001640147-23-000260,https://www.sec.gov/Archives/edgar/data/0001640147/000164014723000260/snow-20231031.htm,0,,,10-Q - 2023-12-01,metadata_only
+SNOW,8-K,2023-11-29,0001640147-23-000253,https://www.sec.gov/Archives/edgar/data/0001640147/000164014723000253/snow-20231128.htm,0,,,8-K - 2023-11-29,metadata_only
+SNOW,10-Q,2023-08-31,0001640147-23-000199,https://www.sec.gov/Archives/edgar/data/0001640147/000164014723000199/snow-20230731.htm,0,,,10-Q - 2023-08-31,metadata_only
+SNOW,8-K,2023-08-23,0001640147-23-000193,https://www.sec.gov/Archives/edgar/data/0001640147/000164014723000193/snow-20230822.htm,0,,,8-K - 2023-08-23,metadata_only
+SNOW,8-K,2023-07-12,0001640147-23-000164,https://www.sec.gov/Archives/edgar/data/0001640147/000164014723000164/snow-20230705.htm,0,,,8-K - 2023-07-12,metadata_only
+SNOW,10-Q,2023-06-02,0001640147-23-000102,https://www.sec.gov/Archives/edgar/data/0001640147/000164014723000102/snow-20230430.htm,0,,,10-Q - 2023-06-02,metadata_only
+SNOW,DEF 14A,2023-05-25,0001640147-23-000082,https://www.sec.gov/Archives/edgar/data/0001640147/000164014723000082/snow-20230525.htm,0,,,DEF 14A - 2023-05-25,metadata_only
+SNOW,8-K,2023-05-24,0001640147-23-000073,https://www.sec.gov/Archives/edgar/data/0001640147/000164014723000073/snow-20230523.htm,0,,,8-K - 2023-05-24,metadata_only
+SNOW,8-K,2023-04-07,0001640147-23-000044,https://www.sec.gov/Archives/edgar/data/0001640147/000164014723000044/snow-20230405.htm,0,,,8-K - 2023-04-07,metadata_only
+SNOW,10-K,2023-03-29,0001640147-23-000030,https://www.sec.gov/Archives/edgar/data/0001640147/000164014723000030/snow-20230131.htm,0,,,10-K - 2023-03-29,metadata_only
+SNOW,8-K,2023-03-01,0001640147-23-000004,https://www.sec.gov/Archives/edgar/data/0001640147/000164014723000004/snow-20230301.htm,0,,,8-K - 2023-03-01,metadata_only
+SNOW,10-Q,2022-12-02,0001640147-22-000100,https://www.sec.gov/Archives/edgar/data/0001640147/000164014722000100/snow-20221031.htm,0,,,10-Q - 2022-12-02,metadata_only
+SNOW,8-K,2022-11-30,0001640147-22-000097,https://www.sec.gov/Archives/edgar/data/0001640147/000164014722000097/snow-20221130.htm,0,,,8-K - 2022-11-30,metadata_only
+SNOW,10-Q,2022-09-01,0001640147-22-000084,https://www.sec.gov/Archives/edgar/data/0001640147/000164014722000084/snow-20220731.htm,0,,,10-Q - 2022-09-01,metadata_only
+SNOW,8-K,2022-08-24,0001640147-22-000078,https://www.sec.gov/Archives/edgar/data/0001640147/000164014722000078/snow-20220824.htm,0,,,8-K - 2022-08-24,metadata_only
+SNOW,8-K,2022-07-12,0001640147-22-000074,https://www.sec.gov/Archives/edgar/data/0001640147/000164014722000074/snow-20220707.htm,0,,,8-K - 2022-07-12,metadata_only
+SNOW,10-Q,2022-06-03,0001640147-22-000044,https://www.sec.gov/Archives/edgar/data/0001640147/000164014722000044/snow-20220430.htm,0,,,10-Q - 2022-06-03,metadata_only
+SNOW,DEF 14A,2022-05-27,0001640147-22-000038,https://www.sec.gov/Archives/edgar/data/0001640147/000164014722000038/snow-2022proxystatement.htm,0,,,DEF 14A - 2022-05-27,metadata_only
+SNOW,8-K,2022-05-25,0001640147-22-000031,https://www.sec.gov/Archives/edgar/data/0001640147/000164014722000031/snow-20220525.htm,0,,,8-K - 2022-05-25,metadata_only
+SNOW,10-K,2022-03-30,0001640147-22-000023,https://www.sec.gov/Archives/edgar/data/0001640147/000164014722000023/snow-20220131.htm,0,,,10-K - 2022-03-30,metadata_only
+SNOW,8-K,2022-03-02,0001640147-22-000005,https://www.sec.gov/Archives/edgar/data/0001640147/000164014722000005/snow-20220302.htm,0,,,8-K - 2022-03-02,metadata_only
+SNOW,10-Q,2021-12-03,0001640147-21-000271,https://www.sec.gov/Archives/edgar/data/0001640147/000164014721000271/snow-20211031.htm,0,,,10-Q - 2021-12-03,metadata_only
+SNOW,8-K,2021-12-01,0001640147-21-000268,https://www.sec.gov/Archives/edgar/data/0001640147/000164014721000268/snow-20211201.htm,0,,,8-K - 2021-12-01,metadata_only
+SNOW,10-Q,2021-09-02,0001640147-21-000212,https://www.sec.gov/Archives/edgar/data/0001640147/000164014721000212/snow-20210731.htm,0,,,10-Q - 2021-09-02,metadata_only
+SNOW,8-K,2021-08-25,0001640147-21-000197,https://www.sec.gov/Archives/edgar/data/0001640147/000164014721000197/snow-20210825.htm,0,,,8-K - 2021-08-25,metadata_only
+SNOW,8-K,2021-07-13,0001640147-21-000171,https://www.sec.gov/Archives/edgar/data/0001640147/000164014721000171/snow-20210708.htm,0,,,8-K - 2021-07-13,metadata_only
+SNOW,10-Q,2021-06-04,0001640147-21-000122,https://www.sec.gov/Archives/edgar/data/0001640147/000164014721000122/snow-20210430.htm,0,,,10-Q - 2021-06-04,metadata_only
+SNOW,DEF 14A,2021-05-27,0001640147-21-000111,https://www.sec.gov/Archives/edgar/data/0001640147/000164014721000111/snow-2021proxystatement.htm,0,,,DEF 14A - 2021-05-27,metadata_only
+SNOW,8-K,2021-05-26,0001640147-21-000103,https://www.sec.gov/Archives/edgar/data/0001640147/000164014721000103/snow-20210526.htm,0,,,8-K - 2021-05-26,metadata_only
+SNOW,10-K,2021-03-31,0001640147-21-000073,https://www.sec.gov/Archives/edgar/data/0001640147/000164014721000073/snow-20210131.htm,0,,,10-K - 2021-03-31,metadata_only
+SNOW,8-K,2021-03-03,0001640147-21-000021,https://www.sec.gov/Archives/edgar/data/0001640147/000164014721000021/snow-20210301.htm,0,,,8-K - 2021-03-03,metadata_only
+SNOW,8-K,2020-12-29,0001640147-20-000028,https://www.sec.gov/Archives/edgar/data/0001640147/000164014720000028/snow-20201229.htm,0,,,8-K - 2020-12-29,metadata_only
+SNOW,10-Q,2020-12-03,0001640147-20-000023,https://www.sec.gov/Archives/edgar/data/0001640147/000164014720000023/snow-20201031.htm,0,,,10-Q - 2020-12-03,metadata_only
+SNOW,8-K,2020-12-02,0001640147-20-000020,https://www.sec.gov/Archives/edgar/data/0001640147/000164014720000020/snow-20201202.htm,0,,,8-K - 2020-12-02,metadata_only
+SNOW,8-K,2020-09-18,0001628280-20-013752,https://www.sec.gov/Archives/edgar/data/0001628280/000162828020013752/snowflake8-k.htm,0,,,8-K - 2020-09-18,metadata_only

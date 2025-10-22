@@ -1,0 +1,58 @@
+ticker,filing_type,filing_date,accession_number,filing_url,ai_mentions_count,ai_keywords_found,ai_context_snippets,filing_title,status
+GOOGL,8-K,2025-09-05,0001652044-25-000074,https://www.sec.gov/Archives/edgar/data/0001652044/000165204425000074/goog-20250905.htm,0,,,8-K - 2025-09-05,metadata_only
+GOOGL,8-K,2025-09-03,0001652044-25-000067,https://www.sec.gov/Archives/edgar/data/0001652044/000165204425000067/goog-20250902.htm,0,,,8-K - 2025-09-03,metadata_only
+GOOGL,10-Q,2025-07-24,0001652044-25-000062,https://www.sec.gov/Archives/edgar/data/0001652044/000165204425000062/goog-20250630.htm,0,,,10-Q - 2025-07-24,metadata_only
+GOOGL,8-K,2025-07-23,0001652044-25-000056,https://www.sec.gov/Archives/edgar/data/0001652044/000165204425000056/goog-20250723.htm,0,,,8-K - 2025-07-23,metadata_only
+GOOGL,8-K,2025-07-18,0001193125-25-161225,https://www.sec.gov/Archives/edgar/data/0001193125/000119312525161225/d21412d8k.htm,0,,,8-K - 2025-07-18,metadata_only
+GOOGL,8-K,2025-06-12,0001193125-25-139948,https://www.sec.gov/Archives/edgar/data/0001193125/000119312525139948/d949049d8k.htm,0,,,8-K - 2025-06-12,metadata_only
+GOOGL,8-K,2025-05-06,0001193125-25-113864,https://www.sec.gov/Archives/edgar/data/0001193125/000119312525113864/d859422d8k.htm,0,,,8-K - 2025-05-06,metadata_only
+GOOGL,8-K,2025-05-01,0001193125-25-110020,https://www.sec.gov/Archives/edgar/data/0001193125/000119312525110020/d884388d8k.htm,0,,,8-K - 2025-05-01,metadata_only
+GOOGL,DEF 14A,2025-04-25,0001308179-25-000511,https://www.sec.gov/Archives/edgar/data/0001308179/000130817925000511/goog012701-def14a.htm,0,,,DEF 14A - 2025-04-25,metadata_only
+GOOGL,10-Q,2025-04-25,0001652044-25-000043,https://www.sec.gov/Archives/edgar/data/0001652044/000165204425000043/goog-20250331.htm,0,,,10-Q - 2025-04-25,metadata_only
+GOOGL,8-K,2025-04-24,0001652044-25-000040,https://www.sec.gov/Archives/edgar/data/0001652044/000165204425000040/goog-20250423.htm,0,,,8-K - 2025-04-24,metadata_only
+GOOGL,8-K,2025-04-18,0001652044-25-000033,https://www.sec.gov/Archives/edgar/data/0001652044/000165204425000033/goog-20250417.htm,0,,,8-K - 2025-04-18,metadata_only
+GOOGL,8-K,2025-03-18,0001652044-25-000027,https://www.sec.gov/Archives/edgar/data/0001652044/000165204425000027/goog-20250318.htm,0,,,8-K - 2025-03-18,metadata_only
+GOOGL,10-K,2025-02-05,0001652044-25-000014,https://www.sec.gov/Archives/edgar/data/0001652044/000165204425000014/goog-20241231.htm,0,,,10-K - 2025-02-05,metadata_only
+GOOGL,8-K,2025-02-04,0001652044-25-000010,https://www.sec.gov/Archives/edgar/data/0001652044/000165204425000010/goog-20250204.htm,0,,,8-K - 2025-02-04,metadata_only
+GOOGL,10-Q,2024-10-30,0001652044-24-000118,https://www.sec.gov/Archives/edgar/data/0001652044/000165204424000118/goog-20240930.htm,0,,,10-Q - 2024-10-30,metadata_only
+GOOGL,8-K,2024-10-29,0001652044-24-000115,https://www.sec.gov/Archives/edgar/data/0001652044/000165204424000115/goog-20241029.htm,0,,,8-K - 2024-10-29,metadata_only
+GOOGL,8-K,2024-10-17,0001193125-24-238769,https://www.sec.gov/Archives/edgar/data/0001193125/000119312524238769/d627891d8k.htm,0,,,8-K - 2024-10-17,metadata_only
+GOOGL,8-K,2024-09-24,0001652044-24-000097,https://www.sec.gov/Archives/edgar/data/0001652044/000165204424000097/goog-20240924.htm,0,,,8-K - 2024-09-24,metadata_only
+GOOGL,8-K,2024-08-06,0001652044-24-000085,https://www.sec.gov/Archives/edgar/data/0001652044/000165204424000085/goog-20240805.htm,0,,,8-K - 2024-08-06,metadata_only
+GOOGL,10-Q,2024-07-24,0001652044-24-000079,https://www.sec.gov/Archives/edgar/data/0001652044/000165204424000079/goog-20240630.htm,0,,,10-Q - 2024-07-24,metadata_only
+GOOGL,8-K,2024-07-23,0001652044-24-000076,https://www.sec.gov/Archives/edgar/data/0001652044/000165204424000076/goog-20240723.htm,0,,,8-K - 2024-07-23,metadata_only
+GOOGL,8-K,2024-06-26,0001193125-24-168745,https://www.sec.gov/Archives/edgar/data/0001193125/000119312524168745/d809715d8k.htm,0,,,8-K - 2024-06-26,metadata_only
+GOOGL,8-K,2024-06-13,0001193125-24-160721,https://www.sec.gov/Archives/edgar/data/0001193125/000119312524160721/d805807d8k.htm,0,,,8-K - 2024-06-13,metadata_only
+GOOGL,8-K,2024-06-07,0001193125-24-157498,https://www.sec.gov/Archives/edgar/data/0001193125/000119312524157498/d787017d8k.htm,0,,,8-K - 2024-06-07,metadata_only
+GOOGL,8-K,2024-06-05,0001193125-24-154725,https://www.sec.gov/Archives/edgar/data/0001193125/000119312524154725/d837191d8k.htm,0,,,8-K - 2024-06-05,metadata_only
+GOOGL,DEF 14A,2024-04-26,0001308179-24-000612,https://www.sec.gov/Archives/edgar/data/0001308179/000130817924000612/lgoog2024_def14a.htm,0,,,DEF 14A - 2024-04-26,metadata_only
+GOOGL,10-Q,2024-04-26,0001652044-24-000053,https://www.sec.gov/Archives/edgar/data/0001652044/000165204424000053/goog-20240331.htm,0,,,10-Q - 2024-04-26,metadata_only
+GOOGL,8-K,2024-04-25,0001652044-24-000047,https://www.sec.gov/Archives/edgar/data/0001652044/000165204424000047/goog-20240425.htm,0,,,8-K - 2024-04-25,metadata_only
+GOOGL,8-K,2024-02-08,0001652044-24-000032,https://www.sec.gov/Archives/edgar/data/0001652044/000165204424000032/goog-20240208.htm,0,,,8-K - 2024-02-08,metadata_only
+GOOGL,10-K,2024-01-31,0001652044-24-000022,https://www.sec.gov/Archives/edgar/data/0001652044/000165204424000022/goog-20231231.htm,0,,,10-K - 2024-01-31,metadata_only
+GOOGL,8-K,2024-01-30,0001652044-24-000014,https://www.sec.gov/Archives/edgar/data/0001652044/000165204424000014/goog-20240130.htm,0,,,8-K - 2024-01-30,metadata_only
+GOOGL,10-Q,2023-10-25,0001652044-23-000094,https://www.sec.gov/Archives/edgar/data/0001652044/000165204423000094/goog-20230930.htm,0,,,10-Q - 2023-10-25,metadata_only
+GOOGL,8-K,2023-10-24,0001652044-23-000088,https://www.sec.gov/Archives/edgar/data/0001652044/000165204423000088/goog-20231018.htm,0,,,8-K - 2023-10-24,metadata_only
+GOOGL,10-Q,2023-07-26,0001652044-23-000070,https://www.sec.gov/Archives/edgar/data/0001652044/000165204423000070/goog-20230630.htm,0,,,10-Q - 2023-07-26,metadata_only
+GOOGL,8-K,2023-07-25,0001652044-23-000067,https://www.sec.gov/Archives/edgar/data/0001652044/000165204423000067/goog-20230720.htm,0,,,8-K - 2023-07-25,metadata_only
+GOOGL,8-K,2023-06-08,0001193125-23-163590,https://www.sec.gov/Archives/edgar/data/0001193125/000119312523163590/d442583d8k.htm,0,,,8-K - 2023-06-08,metadata_only
+GOOGL,10-Q,2023-04-26,0001652044-23-000045,https://www.sec.gov/Archives/edgar/data/0001652044/000165204423000045/goog-20230331.htm,0,,,10-Q - 2023-04-26,metadata_only
+GOOGL,8-K,2023-04-25,0001652044-23-000041,https://www.sec.gov/Archives/edgar/data/0001652044/000165204423000041/goog-20230425.htm,0,,,8-K - 2023-04-25,metadata_only
+GOOGL,DEF 14A,2023-04-21,0001308179-23-000736,https://www.sec.gov/Archives/edgar/data/0001308179/000130817923000736/lgoog2023_def14a.htm,0,,,DEF 14A - 2023-04-21,metadata_only
+GOOGL,8-K,2023-04-21,0001193125-23-110657,https://www.sec.gov/Archives/edgar/data/0001193125/000119312523110657/d490635d8k.htm,0,,,8-K - 2023-04-21,metadata_only
+GOOGL,8-K,2023-04-20,0001652044-23-000034,https://www.sec.gov/Archives/edgar/data/0001652044/000165204423000034/goog-20230420.htm,0,,,8-K - 2023-04-20,metadata_only
+GOOGL,10-K,2023-02-03,0001652044-23-000016,https://www.sec.gov/Archives/edgar/data/0001652044/000165204423000016/goog-20221231.htm,0,,,10-K - 2023-02-03,metadata_only
+GOOGL,8-K,2023-02-02,0001652044-23-000013,https://www.sec.gov/Archives/edgar/data/0001652044/000165204423000013/goog-20230202.htm,0,,,8-K - 2023-02-02,metadata_only
+GOOGL,8-K,2023-01-25,0001652044-23-000005,https://www.sec.gov/Archives/edgar/data/0001652044/000165204423000005/goog-20230124.htm,0,,,8-K - 2023-01-25,metadata_only
+GOOGL,8-K,2023-01-20,0001193125-23-011424,https://www.sec.gov/Archives/edgar/data/0001193125/000119312523011424/d454494d8k.htm,0,,,8-K - 2023-01-20,metadata_only
+GOOGL,8-K,2022-12-21,0001193125-22-310153,https://www.sec.gov/Archives/edgar/data/0001193125/000119312522310153/d441338d8k.htm,0,,,8-K - 2022-12-21,metadata_only
+GOOGL,10-Q,2022-10-26,0001652044-22-000090,https://www.sec.gov/Archives/edgar/data/0001652044/000165204422000090/goog-20220930.htm,0,,,10-Q - 2022-10-26,metadata_only
+GOOGL,8-K,2022-10-25,0001652044-22-000085,https://www.sec.gov/Archives/edgar/data/0001652044/000165204422000085/goog-20221025.htm,0,,,8-K - 2022-10-25,metadata_only
+GOOGL,10-Q,2022-07-27,0001652044-22-000071,https://www.sec.gov/Archives/edgar/data/0001652044/000165204422000071/goog-20220630.htm,0,,,10-Q - 2022-07-27,metadata_only
+GOOGL,8-K,2022-07-26,0001652044-22-000068,https://www.sec.gov/Archives/edgar/data/0001652044/000165204422000068/goog-20220726.htm,0,,,8-K - 2022-07-26,metadata_only
+GOOGL,8-K,2022-07-14,0001193125-22-193655,https://www.sec.gov/Archives/edgar/data/0001193125/000119312522193655/d336210d8k.htm,0,,,8-K - 2022-07-14,metadata_only
+GOOGL,8-K,2022-07-13,0001193125-22-192153,https://www.sec.gov/Archives/edgar/data/0001193125/000119312522192153/d373544d8k.htm,0,,,8-K - 2022-07-13,metadata_only
+GOOGL,8-K,2022-06-03,0001193125-22-167375,https://www.sec.gov/Archives/edgar/data/0001193125/000119312522167375/d294315d8k.htm,0,,,8-K - 2022-06-03,metadata_only
+GOOGL,10-Q,2022-04-27,0001652044-22-000029,https://www.sec.gov/Archives/edgar/data/0001652044/000165204422000029/goog-20220331.htm,0,,,10-Q - 2022-04-27,metadata_only
+GOOGL,8-K,2022-04-26,0001652044-22-000025,https://www.sec.gov/Archives/edgar/data/0001652044/000165204422000025/goog-20220426.htm,0,,,8-K - 2022-04-26,metadata_only
+GOOGL,DEF 14A,2022-04-22,0001308179-22-000262,https://www.sec.gov/Archives/edgar/data/0001308179/000130817922000262/lgoog2022_def14a.htm,0,,,DEF 14A - 2022-04-22,metadata_only

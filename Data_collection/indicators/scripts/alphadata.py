@@ -36,14 +36,12 @@ RATE_LIMIT_DELAY = int(os.getenv('RATE_LIMIT_DELAY', '15'))  # seconds between A
 
 OUTPUT_DIR = os.path.join(BASE_DIR, "alpha")
 COMPANY_LIST_PATH = os.path.join(BASE_DIR, "..", "Tickers", "merged_tickers.csv")
-# For international companies, use your existing complete_data_improved/ files
-COMPLETE_DATA_DIR = os.path.join(BASE_DIR, "complete_data_improved")  # For market cap data
 
-# Track API usage per key (4 calls per ticker, 25 calls per day per key = 6 tickers per key per day)
+# Track API usage per key (5 calls per ticker, 400 calls per day per key = 80 tickers per key per day)
 api_call_counts = {key: 0 for key in API_KEYS}
 current_api_key_index = 0
-CALLS_PER_KEY_LIMIT = 400  # Free tier daily limit
-CALLS_PER_TICKER = 4  # Income Statement + Earnings + Balance Sheet + Cash Flow
+CALLS_PER_KEY_LIMIT = 550  # Premium tier daily limit
+CALLS_PER_TICKER = 5  # Income Statement + Earnings + Balance Sheet + Cash Flow + Historical Prices
 
 # ==== CREATE OUTPUT DIRECTORY ====
 os.makedirs(OUTPUT_DIR, exist_ok=True)
@@ -68,10 +66,10 @@ def rotate_api_key():
         # If next key is also at limit, we've exhausted all keys
         if api_call_counts[next_key] >= CALLS_PER_KEY_LIMIT:
             print("\n" + "="*60)
-            print("⚠️  ALL API KEYS HAVE REACHED DAILY LIMIT (25 calls each)")
+            print("⚠️  ALL API KEYS HAVE REACHED DAILY LIMIT (400 calls each)")
             print("="*60)
             print(f"Total API calls made: {sum(api_call_counts.values())}")
-            print(f"Tickers completed: {sum(api_call_counts.values()) // 5}")
+            print(f"Tickers completed: {sum(api_call_counts.values()) // CALLS_PER_TICKER}")
             print("\nOptions:")
             print("1. Wait 24 hours for limits to reset")
             print("2. Get more API keys")
@@ -108,41 +106,6 @@ def load_company_list():
     df = df[df['Ticker'].notna()]
     return df['Ticker'].tolist()
 
-def load_market_cap_by_quarter(ticker):
-    """Load market cap data grouped by year and quarter from existing complete_data_improved CSV files"""
-    try:
-        # Convert ticker format for filename (e.g., "000660 KS" -> "000660_KS")
-        clean_ticker = ticker.replace(' ', '_').replace('/', '_')
-        file_path = os.path.join(COMPLETE_DATA_DIR, f"{clean_ticker}_complete.csv")
-        
-        if not os.path.exists(file_path):
-            print(f"  ⚠️  Market cap file not found: {file_path}")
-            return None
-        
-        # Load the CSV
-        df = pd.read_csv(file_path)
-        
-        if 'year' not in df.columns or 'quarter' not in df.columns or 'market_cap' not in df.columns:
-            print(f"  ⚠️  Missing year, quarter, or market_cap columns")
-            return None
-        
-        # Group by year and quarter, take the median market cap for each quarter
-        # (median is more robust to outliers than mean)
-        quarterly_market_cap = df.groupby(['year', 'quarter'])['market_cap'].median().reset_index()
-        quarterly_market_cap = quarterly_market_cap[quarterly_market_cap['market_cap'].notna()]
-        
-        if len(quarterly_market_cap) > 0:
-            quarters = len(quarterly_market_cap)
-            year_range = f"{quarterly_market_cap['year'].min()}-{quarterly_market_cap['year'].max()}"
-            print(f"  ✅ Loaded {quarters} quarters of market cap data ({year_range})")
-            return quarterly_market_cap
-        
-        print(f"  ⚠️  No valid market cap data")
-        return None
-        
-    except Exception as e:
-        print(f"  ⚠️  Error loading market cap: {str(e)}")
-        return None
 
 # ==== API FETCH FUNCTIONS ====
 def fetch_income_statement(ticker):
@@ -239,15 +202,87 @@ def fetch_cash_flow(ticker):
         return filtered
     return []
 
-# def fetch_company_overview(ticker):
-#     """Fetch company overview for market cap"""
-#     print(f"  Fetching company overview...")
-#     api_key = get_current_api_key()
-#     url = f"https://www.alphavantage.co/query?function=OVERVIEW&symbol={ticker}&apikey={api_key}"
-#     response = requests.get(url)
-#     data = response.json()
-#     increment_api_call()
-#     return data
+def fetch_company_overview(ticker):
+    """Fetch company overview for market cap"""
+    print(f"  Fetching company overview...")
+    api_key = get_current_api_key()
+    url = f"https://www.alphavantage.co/query?function=OVERVIEW&symbol={ticker}&apikey={api_key}"
+    response = requests.get(url)
+    data = response.json()
+    increment_api_call()
+    
+    # Check for API errors or limitations
+    if "Note" in data:
+        print(f"  ⚠️  API message: {data['Note']}")
+        return None
+    if "Error Message" in data:
+        print(f"  ⚠️  API error: {data['Error Message']}")
+        return None
+    if "Information" in data:
+        print(f"  ⚠️  API info: {data['Information']}")
+        return None
+    
+    # Extract market cap from overview data
+    market_cap = data.get('MarketCapitalization')
+    if market_cap and market_cap != 'None':
+        try:
+            market_cap_value = float(market_cap)
+            print(f"  ✅ Market cap: ${market_cap_value:,.0f}")
+            return market_cap_value
+        except (ValueError, TypeError):
+            print(f"  ⚠️  Invalid market cap value: {market_cap}")
+            return None
+    else:
+        print(f"  ⚠️  No market cap data available")
+        return None
+
+def fetch_historical_prices(ticker):
+    """Fetch historical daily stock prices"""
+    print(f"  Fetching historical prices...")
+    api_key = get_current_api_key()
+    url = f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={ticker}&outputsize=full&apikey={api_key}"
+    response = requests.get(url)
+    data = response.json()
+    increment_api_call()
+    
+    # Check for API errors or limitations
+    if "Note" in data:
+        print(f"  ⚠️  API message: {data['Note']}")
+        return None
+    if "Error Message" in data:
+        print(f"  ⚠️  API error: {data['Error Message']}")
+        return None
+    if "Information" in data:
+        print(f"  ⚠️  API info: {data['Information']}")
+        return None
+    
+    if "Time Series (Daily)" in data:
+        time_series = data["Time Series (Daily)"]
+        if not time_series:
+            print(f"  ⚠️  No historical price data available for {ticker}")
+            return None
+        
+        # Convert to DataFrame
+        prices_df = pd.DataFrame.from_dict(time_series, orient='index')
+        prices_df.index = pd.to_datetime(prices_df.index)
+        prices_df.columns = ['open', 'high', 'low', 'close', 'volume']
+        
+        # Convert to numeric
+        for col in prices_df.columns:
+            prices_df[col] = pd.to_numeric(prices_df[col], errors='coerce')
+        
+        # Filter by year range
+        prices_df = prices_df[(prices_df.index.year >= START_YEAR) & (prices_df.index.year <= END_YEAR)]
+        
+        if len(prices_df) > 0:
+            print(f"  ✅ Loaded {len(prices_df)} days of price data ({prices_df.index.min().date()} to {prices_df.index.max().date()})")
+            return prices_df
+        else:
+            print(f"  ⚠️  No price data in year range {START_YEAR}-{END_YEAR}")
+            return None
+    else:
+        print(f"  ⚠️  No 'Time Series (Daily)' field in response")
+        return None
 
 # ==== DATA PROCESSING ====
 def extract_income_statement_data(reports):
@@ -347,116 +382,96 @@ def merge_all_data(income_df, earnings_df, balance_df, cashflow_df):
     
     return merged
 
-# ==== CALCULATE METRICS ====
-def calculate_metrics(df, market_cap=None):
-    """Calculate all required financial metrics with quarter-matched market cap
+# ==== HISTORICAL MARKET CAP CALCULATION ====
+def calculate_historical_market_cap(financial_df, prices_df):
+    """Calculate historical market cap using stock prices and shares outstanding
     
     Args:
-        df: DataFrame with financial data and fiscalDateEnding column
-        market_cap: DataFrame with 'year', 'quarter', and 'market_cap' columns for quarter matching,
-                   or None if market cap data is unavailable
+        financial_df: DataFrame with financial data including fiscalDateEnding and commonStockSharesOutstanding
+        prices_df: DataFrame with historical daily prices (index=date, columns=close, etc.)
+    
+    Returns:
+        DataFrame with historical market cap data
     """
-    df = df.copy()
+    if financial_df.empty or prices_df is None or prices_df.empty:
+        return None
     
-    # Save ticker if it exists
-    ticker_value = None
-    if 'ticker' in df.columns:
-        ticker_value = df['ticker'].iloc[0] if len(df) > 0 else None
+    # Create a copy to work with
+    df = financial_df.copy()
     
-    # Convert all numeric columns
-    numeric_cols = [col for col in df.columns if col not in ['fiscalDateEnding', 'ticker']]
-    for col in numeric_cols:
-        df[col] = pd.to_numeric(df[col], errors='coerce')
+    # Convert fiscalDateEnding to datetime
+    df['fiscalDate'] = pd.to_datetime(df['fiscalDateEnding'])
     
-    # Sort by date to calculate growth metrics
-    df = df.sort_values('fiscalDateEnding', ascending=True)
+    # Extract shares outstanding (in millions from Alpha Vantage)
+    if 'commonStockSharesOutstanding' not in df.columns:
+        print("  ⚠️  No shares outstanding data available")
+        return None
     
-    # 1. Revenue Growth (%)
-    df['revenueGrowthPct'] = df['totalRevenue'].pct_change() * 100
+    # Convert shares outstanding to numeric
+    df['sharesOutstanding'] = pd.to_numeric(df['commonStockSharesOutstanding'], errors='coerce')
     
-    # 2. Net Income Margin (%)
-    df['netIncomeMarginPct'] = (df['netIncome'] / df['totalRevenue']) * 100
+    # Remove rows where shares outstanding is missing
+    df = df.dropna(subset=['sharesOutstanding'])
     
-    # 3. EPS Surprise (%) - only if earnings data available
-    if 'reportedEPS' in df.columns and 'estimatedEPS' in df.columns:
-        df['epsSurprisePct'] = ((df['reportedEPS'] - df['estimatedEPS']) / df['estimatedEPS'].abs()) * 100
-    else:
-        df['epsSurprisePct'] = None
+    if df.empty:
+        print("  ⚠️  No valid shares outstanding data")
+        return None
     
-    # 4. Free Cash Flow (FCF) - only if cash flow data available
-    if 'operatingCashflow' in df.columns and 'capitalExpenditures' in df.columns:
-        df['freeCashFlow'] = df['operatingCashflow'] + df['capitalExpenditures']  # capEx is usually negative
-    else:
-        df['freeCashFlow'] = None
+    # For each fiscal quarter, find the closest trading day and calculate market cap
+    historical_market_caps = []
     
-    # 5. Debt-to-Equity Ratio - only if balance sheet data available
-    if 'totalLiabilities' in df.columns and 'totalShareholderEquity' in df.columns:
-        df['debtToEquityRatio'] = df['totalLiabilities'] / df['totalShareholderEquity']
-    else:
-        df['debtToEquityRatio'] = None
-    
-    # 6. Cash Ratio - only if balance sheet data available
-    # Note: Current liabilities not directly available, using total liabilities as proxy
-    if 'shortTermDebt' in df.columns and 'longTermDebt' in df.columns:
-        df['totalDebt'] = df['shortTermDebt'].fillna(0) + df['longTermDebt'].fillna(0)
-    else:
-        df['totalDebt'] = None
-    
-    if 'cashAndCashEquivalentsAtCarryingValue' in df.columns and 'shortTermDebt' in df.columns:
-        df['cashRatio'] = df['cashAndCashEquivalentsAtCarryingValue'] / df['shortTermDebt']
-    else:
-        df['cashRatio'] = None
-    
-    # 7. R&D Intensity - only if income statement data available
-    if 'researchAndDevelopment' in df.columns and 'totalRevenue' in df.columns:
-        df['rdIntensityPct'] = (df['researchAndDevelopment'] / df['totalRevenue']) * 100
-    else:
-        df['rdIntensityPct'] = None
-    
-    # 8. Buyback Ratio - only if cash flow and income statement data available
-    if 'proceedsFromRepurchaseOfEquity' in df.columns and 'netIncome' in df.columns:
-        df['buybackRatio'] = -df['proceedsFromRepurchaseOfEquity'] / df['netIncome']
-    else:
-        df['buybackRatio'] = None
-    
-    # 9. P/E and P/S Ratios (requires market cap matched by quarter)
-    if market_cap is not None and isinstance(market_cap, pd.DataFrame) and not market_cap.empty:
-        # Extract year and quarter from fiscalDateEnding
-        df['fiscalDate'] = pd.to_datetime(df['fiscalDateEnding'])
-        df['fiscal_year'] = df['fiscalDate'].dt.year
-        df['fiscal_quarter'] = df['fiscalDate'].dt.quarter
+    for _, row in df.iterrows():
+        fiscal_date = row['fiscalDate']
+        shares_outstanding = row['sharesOutstanding']  # Already in millions
         
-        # Merge market cap data by year and quarter
-        df = df.merge(
-            market_cap[['year', 'quarter', 'market_cap']],
-            left_on=['fiscal_year', 'fiscal_quarter'],
-            right_on=['year', 'quarter'],
-            how='left'
-        )
+        # Find the closest trading day to the fiscal date
+        # Look for trading days within 30 days after the fiscal date
+        days_after_fiscal = prices_df.index - fiscal_date
+        valid_days = days_after_fiscal[(days_after_fiscal >= pd.Timedelta(0)) & (days_after_fiscal <= pd.Timedelta(days=30))]
         
-        # Rename and clean up
-        df.rename(columns={'market_cap': 'marketCap'}, inplace=True)
-        df.drop(['fiscalDate', 'fiscal_year', 'fiscal_quarter', 'year', 'quarter'], axis=1, inplace=True, errors='ignore')
-        
-        # Calculate ratios using quarter-matched market cap
-        df['peRatio'] = df['marketCap'] / df['netIncome']
-        df['psRatio'] = df['marketCap'] / df['totalRevenue']
-    else:
-        df['marketCap'] = None
-        df['peRatio'] = None
-        df['psRatio'] = None
-        
-    # Sort back to newest first
-    df = df.sort_values('fiscalDateEnding', ascending=False)
-    
-    # Restore ticker column if it existed
-    if ticker_value is not None:
-        if 'ticker' not in df.columns:
-            df.insert(0, 'ticker', ticker_value)
+        if len(valid_days) > 0:
+            # Get the first trading day after the fiscal date
+            closest_date = fiscal_date + valid_days.min()
+            closest_price = prices_df.loc[closest_date, 'close']
+            
+            # Calculate market cap (shares in millions, price per share)
+            market_cap = shares_outstanding * closest_price  # Already in millions
+            
+            historical_market_caps.append({
+                'fiscalDateEnding': row['fiscalDateEnding'],
+                'marketCap': market_cap,
+                'stockPrice': closest_price,
+                'sharesOutstanding': shares_outstanding,
+                'priceDate': closest_date.strftime('%Y-%m-%d')
+            })
         else:
-            df['ticker'] = ticker_value
+            # If no trading day found within 30 days, try to find the closest day before
+            days_before_fiscal = fiscal_date - prices_df.index
+            valid_days_before = days_before_fiscal[(days_before_fiscal >= pd.Timedelta(0)) & (days_before_fiscal <= pd.Timedelta(days=30))]
+            
+            if len(valid_days_before) > 0:
+                closest_date = fiscal_date - valid_days_before.min()
+                closest_price = prices_df.loc[closest_date, 'close']
+                market_cap = shares_outstanding * closest_price
+                
+                historical_market_caps.append({
+                    'fiscalDateEnding': row['fiscalDateEnding'],
+                    'marketCap': market_cap,
+                    'stockPrice': closest_price,
+                    'sharesOutstanding': shares_outstanding,
+                    'priceDate': closest_date.strftime('%Y-%m-%d')
+                })
     
-    return df
+    if not historical_market_caps:
+        print("  ⚠️  Could not calculate any historical market caps")
+        return None
+    
+    # Convert to DataFrame
+    market_cap_df = pd.DataFrame(historical_market_caps)
+    
+    print(f"  ✅ Calculated {len(market_cap_df)} quarters of historical market cap")
+    return market_cap_df
+
 
 # ==== MAIN PROCESSING FUNCTION ====
 def process_ticker(ticker):
@@ -470,14 +485,20 @@ def process_ticker(ticker):
         return False  # All keys exhausted
     
     try:
-        # Fetch all data with rate limiting
+        # Fetch income statement first to check if ticker exists in Alpha Vantage
         income_reports = fetch_income_statement(ticker)
         time.sleep(RATE_LIMIT_DELAY)
+        
+        # Check if income statement has data - if not, skip remaining API calls
+        if not income_reports:
+            print(f"⚠️  No income statement data available for {ticker}, skipping remaining API calls...")
+            return False
         
         # Check and rotate key if needed
         if not rotate_api_key():
             return False
         
+        # Continue with remaining API calls since we have data
         earnings_reports = fetch_earnings(ticker)
         time.sleep(RATE_LIMIT_DELAY)
         
@@ -493,9 +514,16 @@ def process_ticker(ticker):
         cashflow_reports = fetch_cash_flow(ticker)
         time.sleep(RATE_LIMIT_DELAY)
         
-        # No need to check rotation here - we're done with API calls (4 total)
+        if not rotate_api_key():
+            return False
         
-        # Check if we have ANY data from any source
+        # Fetch historical prices for market cap calculation
+        prices_df = fetch_historical_prices(ticker)
+        time.sleep(RATE_LIMIT_DELAY)
+        
+        # No need to check rotation here - we're done with API calls (5 total)
+        
+        # Check if we have ANY data from any source (should be true since we have income_reports)
         has_data = bool(income_reports or earnings_reports or balance_reports or cashflow_reports)
         
         if not has_data:
@@ -534,16 +562,19 @@ def process_ticker(ticker):
         # Add ticker column
         merged_df.insert(0, 'ticker', ticker)
         
-        # Get market cap by quarter from existing data instead of API
-        print(f"  Loading market cap by quarter from existing data...")
-        market_cap_df = load_market_cap_by_quarter(ticker)
+        # Calculate historical market cap using prices and shares outstanding
+        print(f"  Calculating historical market cap...")
+        historical_market_cap_df = calculate_historical_market_cap(merged_df, prices_df)
         
-        # Calculate metrics (with quarter-matched market cap)
-        try:
-            final_df = calculate_metrics(merged_df, market_cap_df)
-        except Exception as e:
-            print(f"❌ Error calculating metrics for {ticker}: {e}")
-            return False
+        # Merge historical market cap data directly into merged_df
+        if historical_market_cap_df is not None and not historical_market_cap_df.empty:
+            final_df = merged_df.merge(
+                historical_market_cap_df[['fiscalDateEnding', 'marketCap', 'stockPrice', 'sharesOutstanding']],
+                on='fiscalDateEnding',
+                how='left'
+            )
+        else:
+            final_df = merged_df
         
         # Check that we have at least some data to save
         if len(final_df) == 0:
@@ -578,9 +609,10 @@ def main():
     print(f"Output Directory: {OUTPUT_DIR}")
     print(f"Rate Limit Delay: {RATE_LIMIT_DELAY}s between calls")
     print(f"\n🔑 API Keys: {len(API_KEYS)} keys loaded")
-    print(f"📊 API Calls per ticker: {CALLS_PER_TICKER} (no market cap call - using existing data)")
+    print(f"📊 API Calls per ticker: {CALLS_PER_TICKER} (Income + Earnings + Balance + Cash Flow + Historical Prices)")
     print(f"📊 Daily Capacity: {len(API_KEYS) * (CALLS_PER_KEY_LIMIT // CALLS_PER_TICKER)} tickers per day")
     print(f"📊 Estimated Days: {160 // (len(API_KEYS) * (CALLS_PER_KEY_LIMIT // CALLS_PER_TICKER)) + 1} days for all 160 companies")
+    print(f"💡 Optimization: International tickers with no data skip remaining 4 API calls")
     print("="*60)
     
     # Load company list
