@@ -4,92 +4,7 @@ This directory contains all the data collection scripts for the AI Bubble Resear
 
 ## 📁 Scripts Overview
 
-### 1. **`news_collector.py`** - Alpha Vantage News Collection
-**Purpose**: Collect AI-related news articles using Alpha Vantage NEWS_SENTIMENT API
-
-**Features**:
-- Fetches news articles for each company ticker
-- Dual categorization: broad tech news vs focused AI news
-- Built-in sentiment analysis
-- Premium API support (75 calls/minute)
-- Resume capability (skips already processed companies)
-- Ticker mapping for API compatibility (e.g., GOOGL → GOOG, FB → META)
-
-**Input**: Company list from `../Tickers/merged_tickers.csv`
-
-**Output**: `../news_data/av_news/{TICKER}_news.csv`
-
-**Output Columns**:
-```csv
-ticker,title,url,time_published,source,summary,sentiment_score,sentiment_label,
-ticker_sentiment_score,ticker_sentiment_label,relevance_score,category,ai_keywords_found
-```
-
-**Usage**:
-```bash
-python news_collector.py
-```
-
----
-
-### 2. **`sec_collector.py`** - SEC EDGAR Filings Collection
-**Purpose**: Collect official company filings from SEC EDGAR database
-
-**Features**:
-- Fetches SEC filings (10-K, 10-Q, 8-K, DEF 14A) for US companies
-- CIK (Central Index Key) mapping for US companies
-- AI keyword search in filing content
-- Handles international companies gracefully (skips non-US)
-- Respectful rate limiting for SEC servers
-
-**Input**: Company list from `../Tickers/merged_tickers.csv`
-
-**Output**: `../news_data/sec_filings/{TICKER}_filings.csv`
-
-**Output Columns**:
-```csv
-ticker,filing_type,filing_date,accession_number,filing_url,ai_mentions_count,
-ai_keywords_found,ai_context_snippets,filing_title,status
-```
-
-**Usage**:
-```bash
-python sec_collector.py
-```
-
----
-
-### 3. **`merge_news_data.py`** - Data Consolidation
-**Purpose**: Merge Alpha Vantage news and SEC filings into unified datasets
-
-**Features**:
-- Combines news articles and SEC filings for each company
-- Deduplicates overlapping content
-- Creates timeline of AI-related events
-- Calculates aggregate metrics (sentiment trends, volume patterns)
-- Handles partial data gracefully
-
-**Input**: 
-- Alpha Vantage news files from `../news_data/av_news/`
-- SEC filings from `../news_data/sec_filings/`
-
-**Output**: `../news_data/complete/{TICKER}_complete_news.csv`
-
-**Output Columns**:
-```csv
-ticker,title,url,published_date,source,source_type,summary,sentiment_score,
-sentiment_label,ticker_sentiment,ticker_sentiment_label,relevance_score,
-category,ai_keywords_found,year,quarter,rolling_sentiment,ai_intensity,content_quality
-```
-
-**Usage**:
-```bash
-python merge_news_data.py
-```
-
----
-
-### 4. **`alphadata.py`** - Alpha Vantage Financial Data Collection
+### 1. **`alphadata.py`** - Alpha Vantage Financial Data Collection
 **Purpose**: Collect raw quarterly financial data from Alpha Vantage API
 
 **Features**:
@@ -123,7 +38,7 @@ python alphadata.py
 
 ---
 
-### 5. **`calculate_metrics.py`** - Financial Metrics Calculation
+### 2. **`calculate_metrics.py`** - Financial Metrics Calculation
 **Purpose**: Calculate financial metrics from raw Alpha Vantage data
 
 **Features**:
@@ -164,7 +79,7 @@ python calculate_metrics.py
 
 ---
 
-### 6. **`collect_complete_improved.py`** - Comprehensive Data Collection
+### 3. **`collect_complete_improved.py`** - Comprehensive Data Collection
 **Purpose**: Collect complete dataset combining stock data, financials, and user metrics
 
 **Features**:
@@ -190,29 +105,6 @@ pb_ratio,debt_to_equity,current_ratio,roe,roa,revenue_growth
 ```bash
 python collect_complete_improved.py
 ```
-
----
-
-### 7. **`fix_market_cap.py`** - Market Cap Data Correction
-**Purpose**: Fix market cap data in Alpha Vantage financial files
-
-**Features**:
-- Updates market cap values in `alphadata.py` output files
-- Matches quarterly market cap data from `complete_data_improved` files
-- Creates backups before modifying files
-- Handles different ticker formats (international companies)
-
-**Input**: 
-- Alpha Vantage files from `../alpha/`
-- Complete data files from `../complete_data_improved/`
-
-**Output**: Updates existing `../alpha/{TICKER}_alpha_data.csv` files
-
-**Usage**:
-```bash
-python fix_market_cap.py
-```
-
 
 ---
 
@@ -253,14 +145,6 @@ All scripts require the packages listed in `../requirements.txt`:
    ├── calculate_metrics.py → calculated_data/complete_data_with_metrics_{timestamp}.csv
    ├── collect_complete_improved.py → complete_data_improved/{TICKER}_complete.csv
    └── fix_market_cap.py → Updates alpha files with market cap
-   ↓
-3. News Data Collection
-   ├── news_collector.py → news_data/av_news/{TICKER}_news.csv
-   ├── sec_collector.py → news_data/sec_filings/{TICKER}_filings.csv
-   └── merge_news_data.py → news_data/complete/{TICKER}_complete_news.csv
-   ↓
-4. Analysis & Reporting
-   └── analyze_news_trends.py → news_data/analysis/ (multiple files)
 ```
 
 ### 🔄 New Workflow (Separation of Concerns)
@@ -303,10 +187,6 @@ python calculate_metrics.py           # Calculate all financial metrics
 python collect_complete_improved.py   # Additional comprehensive data
 python fix_market_cap.py             # Fix market cap data
 
-# News data
-python news_collector.py
-python sec_collector.py
-python merge_news_data.py
 ```
 
 ### 4. Test International Companies (Optional)
@@ -321,10 +201,7 @@ python test_international_symbols.py
 After running all scripts, you'll have:
 
 - **Financial Data**: ~100 CSV files with quarterly financial metrics
-- **News Data**: ~60-160 CSV files with AI-related news articles
 - **SEC Filings**: ~50 CSV files with official company filings
-- **Merged Data**: ~100 CSV files with combined news and financial data
-- **Analysis Files**: Summary statistics and trend analysis
 
 ---
 
