@@ -20,6 +20,34 @@ indicators/
 │   └── ... (139 company files with market cap data)
 ├── DC/                                          # Data collection environment
 │   └── ... (Python virtual environment)
+├── stock_analysis/                              # Financial statement analysis data
+│   ├── USD/                                     # US Dollar companies
+│   │   ├── APPLE INC/                          # Apple financial statements
+│   │   ├── MICROSOFT CORP/                     # Microsoft financial statements
+│   │   └── ... (130+ US companies)
+│   ├── EUR/                                     # Euro companies
+│   │   ├── INFINEON TECHNOLOGIES AG/           # German semiconductor company
+│   │   ├── SIEMENS ENERGY AG NPV/              # German energy company
+│   │   └── ... (additional European companies)
+│   ├── JPY/                                     # Japanese Yen companies
+│   │   ├── FUJITSU LIMITED/                    # Japanese technology company
+│   │   ├── NEC CORP/                           # Japanese electronics company
+│   │   └── ... (additional Japanese companies)
+│   ├── HKD/                                     # Hong Kong Dollar companies
+│   │   ├── TENCENT HOLDINGS LTD/               # Chinese tech giant
+│   │   └── MEITUAN DIANPING-CLASS B/           # Chinese food delivery company
+│   ├── KRW/                                     # Korean Won companies
+│   │   ├── Samsung Electronics/                # Korean electronics giant
+│   │   └── SK HYNIX INC/                       # Korean memory chip company
+│   ├── TWD/                                     # Taiwanese Dollar companies
+│   │   ├── ACER INC/                           # Taiwanese computer company
+│   │   ├── ADVANTECH CO LTD/                   # Taiwanese industrial computer company
+│   │   └── ... (additional Taiwanese companies)
+│   ├── CHF/                                     # Swiss Franc companies
+│   │   └── TEMENOS AG - REG/                  # Swiss banking software company
+│   ├── SEK/                                     # Swedish Krona companies
+│   │   └── ERICSSON (LM) TEL-SP ADR/           # Swedish telecom equipment company
+│   └── README.md                               # Stock analysis documentation
 └── docs/                                        # Documentation and guides
     ├── ALPHADATA_README.md                     # Alpha Vantage setup guide
     ├── ALPHADATA_QUICKSTART.md                 # Quick start instructions
@@ -54,6 +82,26 @@ indicators/
 - Enhanced market cap data integration
 - Improved quarter matching algorithms
 - Better handling of international tickers
+
+### 3. `stock_analysis/` - Financial Statement Analysis Data
+
+**Purpose**: Contains detailed quarterly financial statements for international AI companies organized by currency
+
+**Structure**:
+- **Multi-Currency Organization**: Data organized by reporting currency (USD, EUR, JPY, HKD, KRW, TWD, CHF, SEK)
+- **Comprehensive Financial Statements**: Each company includes 4 Excel files:
+  - Balance Sheet (quarterly assets, liabilities, equity)
+  - Income Statement (quarterly revenue, expenses, profit)
+  - Cash Flow Statement (quarterly operating, investing, financing cash flows)
+  - Financial Ratios (calculated quarterly ratios and metrics)
+- **International Coverage**: Companies from major global markets including US, Europe, Asia-Pacific
+- **Quarterly Data**: Detailed quarterly financial data for fundamental analysis
+
+**Use Cases**:
+- Deep-dive fundamental analysis of individual companies
+- Cross-border financial comparison and analysis
+- Currency-specific market analysis
+- Detailed ratio analysis and trend identification
 
 ## Financial Metrics Collected
 
