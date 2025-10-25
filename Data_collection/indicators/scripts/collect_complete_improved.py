@@ -16,7 +16,7 @@ import os
 import warnings
 warnings.filterwarnings('ignore')
 
-os.makedirs('complete_data_improved', exist_ok=True)
+os.makedirs('../complete_data_improved', exist_ok=True)
 
 SEC_HEADERS = {
     'User-Agent': 'AI Bubble Research 23701295@emu.edu.tr',
@@ -30,7 +30,7 @@ print(f"Processing ALL companies from merged_tickers.csv")
 print(f"Collecting: Stock data, Financials, User metrics, Ratios (2015-2025)")
 print(f"{'='*80}\n")
 
-df = pd.read_csv('merged_tickers.csv')
+df = pd.read_csv('../../Tickers/merged_tickers.csv')
 # Filter out empty tickers
 df = df[df['Ticker'].notna() & (df['Ticker'] != '')]
 print(f"Total companies to process: {len(df)}\n")
@@ -105,6 +105,12 @@ def collect_improved_data(ticker, name):
     print(f"\n{'='*80}")
     print(f"Processing: {name} ({ticker})")
     print(f"{'='*80}")
+    
+    # Check if file already exists
+    filename = f"../complete_data_improved/{ticker}_complete.csv"
+    if os.path.exists(filename):
+        print(f"  ⏭ Skipping {ticker} - data already exists")
+        return None
     
     try:
         stock = yf.Ticker(ticker)
@@ -314,7 +320,7 @@ def collect_improved_data(ticker, name):
         df_combined = df_combined[col_order]
         
         # Save
-        filename = f"complete_data_improved/{ticker}_complete.csv"
+        filename = f"../complete_data_improved/{ticker}_complete.csv"
         df_combined.to_csv(filename, index=False)
         
         print(f"  ✓ Saved: {filename}")
@@ -370,7 +376,7 @@ print(f"{'='*80}")
 
 if results:
     summary = pd.DataFrame(results)
-    summary_file = f"complete_data_improved/FULL_SUMMARY_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv"
+    summary_file = f"../complete_data_improved/FULL_SUMMARY_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv"
     summary.to_csv(summary_file, index=False)
     
     print(f"\n📊 Final Statistics:")
@@ -379,12 +385,12 @@ if results:
     print(f"  ✗ Failed: {failed_count}")
     print(f"  👥 Companies with user metrics: {companies_with_users}")
     print(f"\n📁 Output:")
-    print(f"  Individual files: complete_data_improved/[TICKER]_complete.csv")
+    print(f"  Individual files: ../complete_data_improved/[TICKER]_complete.csv")
     print(f"  Summary: {summary_file}")
     
     # Create consolidated file
     print(f"\n📦 Creating consolidated dataset...")
-    all_files = [f"complete_data_improved/{f}" for f in os.listdir('complete_data_improved') if f.endswith('_complete.csv')]
+    all_files = [f"../complete_data_improved/{f}" for f in os.listdir('../complete_data_improved') if f.endswith('_complete.csv')]
     
     if all_files:
         all_data = []
@@ -398,7 +404,7 @@ if results:
         if all_data:
             consolidated = pd.concat(all_data, ignore_index=True)
             consolidated = consolidated.sort_values(['ticker', 'date'])
-            consolidated_file = f"complete_data_improved/ALL_COMPANIES_consolidated_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv"
+            consolidated_file = f"../complete_data_improved/ALL_COMPANIES_consolidated_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv"
             consolidated.to_csv(consolidated_file, index=False)
             
             print(f"  ✓ Consolidated file created: {consolidated_file}")

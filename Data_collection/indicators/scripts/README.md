@@ -14,7 +14,7 @@ This directory contains all the data collection scripts for the AI Bubble Resear
   - Balance Sheet (assets, liabilities, equity)
   - Cash Flow (operating cash flow, capital expenditures)
   - Historical Prices (for market cap calculation)
-- Multi-API key rotation for higher capacity
+- Single premium API key with 75 calls/minute rate limit
 - Historical market cap calculation using prices × shares outstanding
 - **Modified**: Now saves only raw data + market cap (no calculated metrics)
 
@@ -113,12 +113,12 @@ python collect_complete_improved.py
 ### Environment Variables (`.env` file)
 ```bash
 # Alpha Vantage API Configuration
-ALPHA_VANTAGE_API_KEYS=your_key_1,your_key_2,your_key_3
+ALPHA_VANTAGE_API_KEY=your_premium_api_key
 
 # Financial Data Configuration
 START_YEAR=2015
 END_YEAR=2025
-RATE_LIMIT_DELAY=15
+RATE_LIMIT_DELAY=1
 
 # News Collection Configuration
 NEWS_START_YEAR=2015
@@ -210,9 +210,9 @@ After running all scripts, you'll have:
 ### Common Issues
 
 **API Rate Limits**:
-- Financial data: 25 calls/day per key (free tier)
+- Financial data: 75 calls/minute (premium tier)
 - News data: 75 calls/minute (premium tier)
-- Scripts handle rotation automatically
+- Scripts handle rate limiting automatically
 
 **Missing Data**:
 - Some international companies may not have data

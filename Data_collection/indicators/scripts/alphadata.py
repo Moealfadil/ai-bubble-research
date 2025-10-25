@@ -14,89 +14,39 @@ load_dotenv()
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 BASE_DIR = os.path.dirname(SCRIPT_DIR)
 
-# Load API keys from environment variables
-api_keys_str = os.getenv('ALPHA_VANTAGE_API_KEYS')
-if not api_keys_str:
-    print("❌ Error: ALPHA_VANTAGE_API_KEYS not found in environment variables")
-    print("Please create a .env file with your API keys. See .env.example for format.")
+# Load API key from environment variables
+API_KEY = os.getenv('ALPHA_VANTAGE_API_KEY')
+if not API_KEY:
+    print("❌ Error: ALPHA_VANTAGE_API_KEY not found in environment variables")
+    print("Please create a .env file with your premium API key. See .env.example for format.")
     exit(1)
 
-# Parse API keys from comma-separated string
-API_KEYS = [key.strip() for key in api_keys_str.split(',') if key.strip()]
-if not API_KEYS:
-    print("❌ Error: No valid API keys found in ALPHA_VANTAGE_API_KEYS")
-    exit(1)
-
-print(f"✅ Loaded {len(API_KEYS)} API keys from environment variables")
+print(f"✅ Loaded premium API key: {API_KEY[:8]}...")
 
 # Load configuration from environment variables with defaults
 START_YEAR = int(os.getenv('START_YEAR', '2015'))
 END_YEAR = int(os.getenv('END_YEAR', '2025'))
-RATE_LIMIT_DELAY = int(os.getenv('RATE_LIMIT_DELAY', '15'))  # seconds between API calls
+RATE_LIMIT_DELAY = int(os.getenv('RATE_LIMIT_DELAY', '1'))  # seconds between API calls (75 calls/minute)
 
 OUTPUT_DIR = os.path.join(BASE_DIR, "alpha")
 COMPANY_LIST_PATH = os.path.join(BASE_DIR, "..", "Tickers", "merged_tickers.csv")
 
-# Track API usage per key (5 calls per ticker, 400 calls per day per key = 80 tickers per key per day)
-api_call_counts = {key: 0 for key in API_KEYS}
-current_api_key_index = 0
-CALLS_PER_KEY_LIMIT = 550  # Premium tier daily limit
+# Track API usage (5 calls per ticker)
+api_call_count = 0
 CALLS_PER_TICKER = 5  # Income Statement + Earnings + Balance Sheet + Cash Flow + Historical Prices
 
 # ==== CREATE OUTPUT DIRECTORY ====
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
-# ==== API KEY ROTATION ====
-def get_current_api_key():
-    """Get the current API key"""
-    global current_api_key_index
-    return API_KEYS[current_api_key_index]
-
-def rotate_api_key():
-    """Rotate to the next API key when limit is reached"""
-    global current_api_key_index, api_call_counts
-    
-    current_key = API_KEYS[current_api_key_index]
-    
-    # If current key has reached limit, rotate to next
-    if api_call_counts[current_key] >= CALLS_PER_KEY_LIMIT:
-        current_api_key_index = (current_api_key_index + 1) % len(API_KEYS)
-        next_key = API_KEYS[current_api_key_index]
-        
-        # If next key is also at limit, we've exhausted all keys
-        if api_call_counts[next_key] >= CALLS_PER_KEY_LIMIT:
-            print("\n" + "="*60)
-            print("⚠️  ALL API KEYS HAVE REACHED DAILY LIMIT (400 calls each)")
-            print("="*60)
-            print(f"Total API calls made: {sum(api_call_counts.values())}")
-            print(f"Tickers completed: {sum(api_call_counts.values()) // CALLS_PER_TICKER}")
-            print("\nOptions:")
-            print("1. Wait 24 hours for limits to reset")
-            print("2. Get more API keys")
-            print("3. Upgrade to premium tier")
-            print("\nProgress has been saved. Re-run the script tomorrow to continue.")
-            print("="*60)
-            return False
-        
-        print(f"\n🔄 Rotating API key: {current_key[:8]}... → {next_key[:8]}...")
-        print(f"   Previous key used: {api_call_counts[current_key]} calls")
-        print(f"   New key available: {CALLS_PER_KEY_LIMIT - api_call_counts[next_key]} calls remaining")
-    
-    return True
-
+# ==== API CALL TRACKING ====
 def increment_api_call():
-    """Increment the call count for current key"""
-    current_key = get_current_api_key()
-    api_call_counts[current_key] += 1
+    """Increment the call count"""
+    global api_call_count
+    api_call_count += 1
 
 def get_api_stats():
     """Get current API usage statistics"""
-    stats = []
-    for idx, key in enumerate(API_KEYS):
-        is_current = (idx == current_api_key_index)
-        marker = "→ " if is_current else "  "
-        stats.append(f"{marker}Key {idx+1} ({key[:8]}...): {api_call_counts[key]}/{CALLS_PER_KEY_LIMIT} calls")
-    return "\n".join(stats)
+    return f"API calls made: {api_call_count}"
 
 # ==== LOAD COMPANY LIST ====
 def load_company_list():
@@ -111,8 +61,7 @@ def load_company_list():
 def fetch_income_statement(ticker):
     """Fetch quarterly income statement data"""
     print(f"  Fetching income statement...")
-    api_key = get_current_api_key()
-    url = f"https://www.alphavantage.co/query?function=INCOME_STATEMENT&symbol={ticker}&apikey={api_key}"
+    url = f"https://www.alphavantage.co/query?function=INCOME_STATEMENT&symbol={ticker}&apikey={API_KEY}"
     response = requests.get(url)
     data = response.json()
     increment_api_call()
@@ -148,8 +97,7 @@ def fetch_income_statement(ticker):
 def fetch_earnings(ticker):
     """Fetch quarterly earnings data"""
     print(f"  Fetching earnings...")
-    api_key = get_current_api_key()
-    url = f"https://www.alphavantage.co/query?function=EARNINGS&symbol={ticker}&apikey={api_key}"
+    url = f"https://www.alphavantage.co/query?function=EARNINGS&symbol={ticker}&apikey={API_KEY}"
     response = requests.get(url)
     data = response.json()
     increment_api_call()
@@ -167,8 +115,7 @@ def fetch_earnings(ticker):
 def fetch_balance_sheet(ticker):
     """Fetch quarterly balance sheet data"""
     print(f"  Fetching balance sheet...")
-    api_key = get_current_api_key()
-    url = f"https://www.alphavantage.co/query?function=BALANCE_SHEET&symbol={ticker}&apikey={api_key}"
+    url = f"https://www.alphavantage.co/query?function=BALANCE_SHEET&symbol={ticker}&apikey={API_KEY}"
     response = requests.get(url)
     data = response.json()
     increment_api_call()
@@ -186,8 +133,7 @@ def fetch_balance_sheet(ticker):
 def fetch_cash_flow(ticker):
     """Fetch quarterly cash flow data"""
     print(f"  Fetching cash flow...")
-    api_key = get_current_api_key()
-    url = f"https://www.alphavantage.co/query?function=CASH_FLOW&symbol={ticker}&apikey={api_key}"
+    url = f"https://www.alphavantage.co/query?function=CASH_FLOW&symbol={ticker}&apikey={API_KEY}"
     response = requests.get(url)
     data = response.json()
     increment_api_call()
@@ -205,8 +151,7 @@ def fetch_cash_flow(ticker):
 def fetch_company_overview(ticker):
     """Fetch company overview for market cap"""
     print(f"  Fetching company overview...")
-    api_key = get_current_api_key()
-    url = f"https://www.alphavantage.co/query?function=OVERVIEW&symbol={ticker}&apikey={api_key}"
+    url = f"https://www.alphavantage.co/query?function=OVERVIEW&symbol={ticker}&apikey={API_KEY}"
     response = requests.get(url)
     data = response.json()
     increment_api_call()
@@ -239,8 +184,7 @@ def fetch_company_overview(ticker):
 def fetch_historical_prices(ticker):
     """Fetch historical daily stock prices"""
     print(f"  Fetching historical prices...")
-    api_key = get_current_api_key()
-    url = f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={ticker}&outputsize=full&apikey={api_key}"
+    url = f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={ticker}&outputsize=full&apikey={API_KEY}"
     response = requests.get(url)
     data = response.json()
     increment_api_call()
@@ -480,9 +424,7 @@ def process_ticker(ticker):
     print(f"Processing {ticker}...")
     print(f"{'='*60}")
     
-    # Check if we can continue with API calls
-    if not rotate_api_key():
-        return False  # All keys exhausted
+    # No API key rotation needed for premium key
     
     try:
         # Fetch income statement first to check if ticker exists in Alpha Vantage
@@ -494,34 +436,19 @@ def process_ticker(ticker):
             print(f"⚠️  No income statement data available for {ticker}, skipping remaining API calls...")
             return False
         
-        # Check and rotate key if needed
-        if not rotate_api_key():
-            return False
-        
         # Continue with remaining API calls since we have data
         earnings_reports = fetch_earnings(ticker)
         time.sleep(RATE_LIMIT_DELAY)
         
-        if not rotate_api_key():
-            return False
-        
         balance_reports = fetch_balance_sheet(ticker)
         time.sleep(RATE_LIMIT_DELAY)
-        
-        if not rotate_api_key():
-            return False
         
         cashflow_reports = fetch_cash_flow(ticker)
         time.sleep(RATE_LIMIT_DELAY)
         
-        if not rotate_api_key():
-            return False
-        
         # Fetch historical prices for market cap calculation
         prices_df = fetch_historical_prices(ticker)
         time.sleep(RATE_LIMIT_DELAY)
-        
-        # No need to check rotation here - we're done with API calls (5 total)
         
         # Check if we have ANY data from any source (should be true since we have income_reports)
         has_data = bool(income_reports or earnings_reports or balance_reports or cashflow_reports)
@@ -608,10 +535,9 @@ def main():
     print(f"End Year: {END_YEAR}")
     print(f"Output Directory: {OUTPUT_DIR}")
     print(f"Rate Limit Delay: {RATE_LIMIT_DELAY}s between calls")
-    print(f"\n🔑 API Keys: {len(API_KEYS)} keys loaded")
+    print(f"\n🔑 API Key: Premium key loaded")
     print(f"📊 API Calls per ticker: {CALLS_PER_TICKER} (Income + Earnings + Balance + Cash Flow + Historical Prices)")
-    print(f"📊 Daily Capacity: {len(API_KEYS) * (CALLS_PER_KEY_LIMIT // CALLS_PER_TICKER)} tickers per day")
-    print(f"📊 Estimated Days: {160 // (len(API_KEYS) * (CALLS_PER_KEY_LIMIT // CALLS_PER_TICKER)) + 1} days for all 160 companies")
+    print(f"📊 Rate Limit: 75 calls/minute (Premium tier)")
     print(f"💡 Optimization: International tickers with no data skip remaining 4 API calls")
     print("="*60)
     
@@ -648,10 +574,9 @@ def main():
         result = process_ticker(ticker)
         if result:
             success_count += 1
-        elif result is False and sum(api_call_counts.values()) >= len(API_KEYS) * CALLS_PER_KEY_LIMIT:
-            # All keys exhausted
-            stopped_early = True
-            break
+        elif result is False:
+            # API call failed
+            pass
         else:
             fail_count += 1
         
@@ -678,7 +603,7 @@ def main():
     print(f"\n📁 Output directory: {OUTPUT_DIR}")
     
     if stopped_early:
-        print(f"\n💡 To continue: Wait 24 hours and re-run the script")
+        print(f"\n💡 To continue: Re-run the script")
         print(f"   Completed files are automatically skipped")
     
     print("="*60)
