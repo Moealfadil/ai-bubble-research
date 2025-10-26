@@ -1,0 +1,10 @@
+/docs/
+/scripts/__pycache__/
+/scripts/check_all_keys.py
+/scripts/fix_market_cap.py
+/scripts/news_collector.py
+/scripts/merge_news_data.py
+/scripts/sec_collector.py
+
+# Environment variables (contains API keys)
+.env
