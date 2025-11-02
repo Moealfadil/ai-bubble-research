@@ -81,19 +81,63 @@ preprocessed_data/
 
 **File Count**: 153 Excel files (combined from all currency folders)
 
+### final_data/
+
+**Purpose**: Complete analysis-ready dataset with calculated metrics and daily price data
+**Source**: Output from `scripts/adding_missing_columns.py`
+**Organization**: Single folder (no currency subfolders)
+
+**Content**:
+
+- All features from normalized_data (33 financial columns in USD)
+- 4 calculated valuation/R&D metrics
+- 6 date-matched daily price columns (converted to USD)
+- 153 companies (3-4 companies may have NaN prices due to name matching issues)
+- Ready for comprehensive financial analysis and bubble detection
+
+**New Columns Added** (10 total):
+
+**Calculated Metrics**:
+
+- **PEG**: Price/Earnings to Growth ratio (PE Ratio / EPS Growth %)
+- **EPS_Growth_pct_used**: Normalized EPS Growth percentage
+- **R&D_pct_of_Revenue**: R&D spending as percentage of revenue
+- **R&D_to_MarketCap**: R&D spending relative to market capitalization
+
+**Price Data** (date-matched from daily stock data):
+
+- **open_price**: Daily opening price (USD)
+- **close_price**: Daily closing price (USD)
+- **high_price**: Daily high price (USD)
+- **low_price**: Daily low price (USD)
+- **shares_outstanding**: Number of shares outstanding
+- **fixed_ticker**: Standardized ticker from price data source
+
+**Features**:
+
+- **Total Columns**: 43 (33 original + 10 new)
+- **Price Matching**: Nearest-neighbor date matching between quarterly financials and daily prices
+- **Currency Conversion**: International stock prices automatically converted to USD
+- **Column Positioning**: Price data placed immediately after Date column for easy reference
+- **Missing Data**: ~3 companies without price matches (Splunk, Tencent, Hollysys) receive NaN values
+
+**File Count**: 153 Excel files
+
 ## Data Quality Notes
 
 ### Coverage
 
-- **Time Range**: 2015-2025 (cleaned and normalized datasets)
+- **Time Range**: 2015-2025 (cleaned, normalized, and final datasets)
 - **Geographic Coverage**: 8 currencies representing major AI markets
 - **Company Coverage**: 153 AI-related companies from various sectors
+- **Price Data Coverage**: ~150 companies (3-4 companies missing due to name matching)
 
 ### Data Processing Pipeline
 
 1. **Preprocessing**: Raw Excel files → Combined financial statements
 2. **Cleaning**: Full dataset → 33 standardized columns + date filtering
 3. **Normalization**: Multi-currency → USD standardized
+4. **Enrichment**: Add calculated metrics (PEG, R&D ratios) + date-matched price data
 
 ### Exchange Rates Used
 
@@ -109,7 +153,8 @@ preprocessed_data/
 
 ### Usage Recommendations
 
-- **Analysis**: Use `normalized_data/` for cross-company comparisons
+- **Primary Analysis**: Use `final_data/` for comprehensive analysis with valuation metrics and price data
+- **Basic Valuation**: Use `normalized_data/` for cross-company comparisons without price data
 - **Currency-Specific**: Use `cleaned_data/` for regional analysis
 - **Development**: Use `preprocessed_data/` for pipeline testing
 
@@ -123,6 +168,8 @@ Files maintain consistent naming throughout pipeline:
 
 ## Dependencies
 
-- **Source Data**: Stock analysis Excel files organized by currency
-- **Processing Scripts**: preprocess_datasets.py → clean_datasets.py → currency_conversion.py
-- **Requirements**: pandas, openpyxl for Excel processing
+- **Source Data**:
+  - Stock analysis Excel files organized by currency
+  - Complete price data CSVs from `Data_collection/indicators/complete_data_improved/`
+- **Processing Scripts**: preprocess_datasets.py → clean_datasets.py → currency_conversion.py → adding_missing_columns.py
+- **Requirements**: pandas, openpyxl, numpy for data processing and Excel operations

@@ -7,14 +7,16 @@ This directory contains the complete data preparation pipeline for AI bubble res
 ```text
 Data_preparation/
 ├── scripts/                 # Processing scripts
-│   ├── preprocess_datasets.py   # Step 1: Combine raw Excel files
-│   ├── clean_datasets.py        # Step 2: Filter columns & dates
-│   ├── currency_conversion.py   # Step 3: Convert to USD
+│   ├── preprocess_datasets.py     # Step 1: Combine raw Excel files
+│   ├── clean_datasets.py          # Step 2: Filter columns & dates
+│   ├── currency_conversion.py     # Step 3: Convert to USD
+│   ├── adding_missing_columns.py  # Step 4: Add metrics & prices
 │   └── README.md
 └── datasets/                # Data at various processing stages
     ├── preprocessed_data/   # Combined financial statements by currency
     ├── cleaned_data/        # Filtered 33 columns, 2015-2025
     ├── normalized_data/     # USD-converted, analysis-ready
+    ├── final_data/          # Complete with PEG, R&D ratios, prices
     └── README.md
 ```
 
@@ -53,9 +55,30 @@ Data_preparation/
 - Preserves original currency information
 - Creates analysis-ready dataset
 
+### 4. Enrichment Stage
+
+**Script**: `scripts/adding_missing_columns.py`
+**Input**: `datasets/normalized_data/` + `Data_collection/indicators/complete_data_improved/`
+**Output**: `datasets/final_data/`
+
+- Calculates valuation metrics (PEG ratio, R&D ratios)
+- Merges date-matched daily price data
+- Converts international prices to USD
+- Adds shares outstanding and standardized tickers
+- Creates complete analysis-ready dataset with 43 columns
+
 ## Key Datasets
 
-### Final Output: normalized_data/
+### Final Output: final_data/
+
+- **153 companies** in standardized USD format
+- **43 total columns** including calculated metrics and daily prices
+- **10 new columns**: PEG ratio, R&D metrics (4) + daily prices and ticker (6)
+- **2015-2025 timeframe** for consistent analysis
+- **Date-matched prices** using nearest-neighbor matching
+- **Complete analysis-ready** for bubble detection and valuation studies
+
+### Intermediate Output: normalized_data/
 
 - **153 companies** in standardized USD format
 - **33 financial columns** spanning market valuation to capital structure
@@ -80,11 +103,17 @@ cd scripts/
 python preprocess_datasets.py
 python clean_datasets.py
 python currency_conversion.py
+python adding_missing_columns.py
 ```
+
+**Output**: `datasets/final_data/` contains 153 Excel files ready for analysis
 
 ## Data Quality Features
 
 - **Error Handling**: Minimal debugging with continue-on-error processing
 - **File Preservation**: Original filenames maintained throughout pipeline
 - **Currency Tracking**: Original currency preserved in final dataset
-- **Standardization**: Consistent 33-column format for all companies
+- **Standardization**: Consistent column format for all companies
+- **Price Integration**: Daily stock prices matched by date and converted to USD
+- **Calculated Metrics**: PEG ratio and R&D intensity metrics for valuation analysis
+- **Missing Data Handling**: Graceful NaN insertion for unmatched companies (~3 out of 153)

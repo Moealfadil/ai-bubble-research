@@ -60,6 +60,42 @@ This directory contains Python scripts for processing and transforming financial
 - Capital: Total Debt, Net Cash/Debt, R&D, Share-based Comp
 - Per-share: EPS (Diluted)
 
+### 4. adding_missing_columns.py
+
+**Purpose**: Enriches normalized data with calculated metrics and daily price data
+
+- **Input**: Normalized Excel files from `datasets/normalized_data/` + Complete price data from `Data_collection/indicators/complete_data_improved/`
+- **Process**: Calculates valuation ratios, merges date-matched price data with currency conversion
+- **Output**: Final analysis-ready Excel files in `datasets/final_data/`
+
+**Added Calculated Columns** (4 columns):
+
+- **PEG Ratio**: PE Ratio / (EPS Growth × 100) - valuation metric normalized by growth
+- **R&D % of Revenue**: Research & Development / Revenue - R&D intensity
+- **R&D to Market Cap**: Research & Development / Market Capitalization - R&D spending relative to company size
+- **EPS Growth % (used)**: Normalized EPS Growth percentage (handles decimal/percentage formats)
+
+**Added Price Data Columns** (6 columns):
+
+- **open_price, close_price, high_price, low_price**: Daily stock prices (USD-converted, date-matched)
+- **shares_outstanding**: Number of shares outstanding
+- **fixed_ticker**: Standardized ticker symbol from price data source
+
+**Key Features**:
+
+- Date-based nearest-neighbor matching between quarterly financials and daily prices
+- Automatic currency conversion for international stocks (KRW, JPY, EUR, etc. → USD)
+- Fuzzy company name matching between normalized files and price data CSVs
+- Handles missing data gracefully (adds NaN for unmatched companies)
+- Prices positioned immediately after Date column for easy analysis
+
+**Matching Logic**:
+
+- Filename → Company name conversion (underscores to spaces)
+- Normalized alphanumeric matching against CSV "company_name" column
+- Fuzzy fallback for partial matches
+- **Note**: 3-4 companies may not match due to name differences (e.g., "Splunk Inc", "Tencent Holdings Ltd")
+
 ## Data Pipeline Flow
 
 ```text
@@ -76,6 +112,10 @@ Raw Stock Analysis Data
    currency_conversion.py
          ↓
    Normalized Data (USD only)
+         ↓
+   adding_missing_columns.py
+         ↓
+   Final Data (with PEG, R&D ratios, prices)
 ```
 
 ## Usage
@@ -91,6 +131,25 @@ python clean_datasets.py
 
 # Step 3: Convert currencies to USD
 python currency_conversion.py
+
+# Step 4: Add calculated metrics and price data
+python adding_missing_columns.py
+```
+
+### Command-Line Options (adding_missing_columns.py)
+
+```bash
+# Run with default paths
+python adding_missing_columns.py
+
+# Specify custom paths
+python adding_missing_columns.py \
+  --normalized "path/to/normalized_data" \
+  --complete "path/to/complete_data_improved" \
+  --out "path/to/final_data"
+
+# Dry run (validate without writing files)
+python adding_missing_columns.py --dry-run
 ```
 
 ### File Naming Convention
@@ -119,3 +178,4 @@ All scripts include minimal error handling to:
 - **Preprocessed**: Combined financial statements with proper date indexing
 - **Cleaned**: Standardized 33-column format with 2015-2025 data only
 - **Normalized**: All monetary values in USD with original currency preserved
+- **Final**: 43 total columns including PEG ratio, R&D metrics, and date-matched daily prices in USD
