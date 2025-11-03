@@ -99,6 +99,37 @@ Each daily holdings file (`aiq_YYYYMMDD.csv`) contains:
 - Mix of US and international stocks (HK, KS, GR exchanges)
 - Companies span various AI sectors: semiconductors, cloud computing, e-commerce, software
 
+### Additional AI Companies Analysis
+
+**File**: `stock_analysis/companies_left_out.csv`
+
+This dataset contains **36 AI-related companies** that were identified from [StockAnalysis.com's AI stocks list](https://stockanalysis.com/list/ai-stocks/) but are **not included** in the GlobalX AI & Innovation ETF (AIQ) holdings. These companies represent additional AI investment opportunities that fall outside the ETF's selection criteria.
+
+**Data Sources**:
+
+- **Primary**: StockAnalysis.com AI stocks comprehensive list
+- **Historical**: Wayback Machine archives for historical AI stock classifications
+- **Cross-reference**: Compared against AIQ holdings to identify gaps
+
+**Notable Companies Include**:
+
+- **ASML** (ASML Holding N.V.) - Semiconductor equipment leader
+- **ISRG** (Intuitive Surgical) - Robotic surgery systems
+- **ARM** (Arm Holdings) - Chip architecture and licensing
+- **PANW** (Palo Alto Networks) - Cybersecurity with AI integration
+- **KLAC** (KLA Corporation) - Process control and inspection systems
+- **ANET** (Arista Networks) - Cloud networking solutions
+
+**Research Value**:
+
+- **Market Coverage**: Expands AI investment universe beyond ETF constraints
+- **Selection Bias Analysis**: Understanding what AI companies ETFs exclude
+- **Alternative Investment**: Identifies AI stocks with different risk/return profiles
+- **Sector Completeness**: Ensures comprehensive coverage of AI market segments
+
+**Integration with Main Dataset**:
+The `merge_tickers.py` script has been enhanced to incorporate these additional 36 companies into the consolidated ticker analysis, providing a more comprehensive view of the AI investment landscape.
+
 ## Research Applications
 
 This data collection supports research into:

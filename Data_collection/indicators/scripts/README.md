@@ -5,9 +5,11 @@ This directory contains all the data collection scripts for the AI Bubble Resear
 ## 📁 Scripts Overview
 
 ### 1. **`alphadata.py`** - Alpha Vantage Financial Data Collection
+
 **Purpose**: Collect raw quarterly financial data from Alpha Vantage API
 
 **Features**:
+
 - Fetches 5 types of financial data per company:
   - Income Statement (revenue, profit, R&D expenses)
   - Earnings (EPS, surprises, estimates)
@@ -23,6 +25,7 @@ This directory contains all the data collection scripts for the AI Bubble Resear
 **Output**: `../alpha/{TICKER}_alpha_data.csv`
 
 **Output Columns** (Raw Data Only):
+
 ```csv
 ticker,fiscalDateEnding,totalRevenue,grossProfit,operatingIncome,netIncome,
 researchAndDevelopment,ebitda,operatingCashflow,capitalExpenditures,
@@ -32,6 +35,7 @@ surprise,surprisePercentage,marketCap,stockPrice,sharesOutstanding,priceDate
 ```
 
 **Usage**:
+
 ```bash
 python alphadata.py
 ```
@@ -39,9 +43,11 @@ python alphadata.py
 ---
 
 ### 2. **`calculate_metrics.py`** - Financial Metrics Calculation
+
 **Purpose**: Calculate financial metrics from raw Alpha Vantage data
 
 **Features**:
+
 - Reads all CSV files from `../alpha/` directory
 - Calculates 11 comprehensive financial metrics:
   - Revenue Growth %
@@ -63,6 +69,7 @@ python alphadata.py
 **Output**: `../calculated_data/complete_data_with_metrics_{timestamp}.csv`
 
 **Output Columns**:
+
 ```csv
 ticker,fiscalDateEnding,totalRevenue,grossProfit,operatingIncome,netIncome,
 researchAndDevelopment,ebitda,operatingCashflow,capitalExpenditures,
@@ -73,6 +80,7 @@ peRatio,psRatio,priceToBookRatio
 ```
 
 **Usage**:
+
 ```bash
 python calculate_metrics.py
 ```
@@ -80,9 +88,11 @@ python calculate_metrics.py
 ---
 
 ### 3. **`collect_complete_improved.py`** - Comprehensive Data Collection
+
 **Purpose**: Collect complete dataset combining stock data, financials, and user metrics
 
 **Features**:
+
 - Fetches stock price data from Yahoo Finance
 - Collects financial statements from SEC
 - Extracts user metrics (MAU, DAU, subscribers) from filings
@@ -94,6 +104,7 @@ python calculate_metrics.py
 **Output**: `../complete_data_improved/{TICKER}_complete.csv`
 
 **Output Columns**:
+
 ```csv
 date,open,high,low,close,volume,market_cap,revenue,gross_profit,net_income,
 research_development,operating_cashflow,capital_expenditures,total_assets,
@@ -102,6 +113,7 @@ pb_ratio,debt_to_equity,current_ratio,roe,roa,revenue_growth
 ```
 
 **Usage**:
+
 ```bash
 python collect_complete_improved.py
 ```
@@ -111,6 +123,7 @@ python collect_complete_improved.py
 ## 🔧 Configuration
 
 ### Environment Variables (`.env` file)
+
 ```bash
 # Alpha Vantage API Configuration
 ALPHA_VANTAGE_API_KEY=your_premium_api_key
@@ -130,14 +143,16 @@ SEC_USER_AGENT=YourName your.email@example.com
 ```
 
 ### Dependencies
+
 All scripts require the packages listed in `../requirements.txt`:
+
 - pandas, requests, yfinance, beautifulsoup4, python-dotenv, sec-edgar-downloader
 
 ---
 
 ## 📊 Data Flow
 
-```
+```text
 1. Company List (merged_tickers.csv)
    ↓
 2. Financial Data Collection
@@ -148,15 +163,19 @@ All scripts require the packages listed in `../requirements.txt`:
 ```
 
 ### 🔄 New Workflow (Separation of Concerns)
+
 **Step 1**: Data Collection
+
 - Run `alphadata.py` to collect raw financial data + market cap
 - Output: Individual CSV files with raw data only
 
 **Step 2**: Metrics Calculation  
+
 - Run `calculate_metrics.py` to calculate all financial metrics
 - Output: Combined dataset with all companies and calculated metrics
 
 This separation allows for:
+
 - ✅ Faster data collection (no calculation overhead)
 - ✅ Flexible metrics calculation (can modify calculations without re-fetching data)
 - ✅ Better error handling and debugging
@@ -167,6 +186,7 @@ This separation allows for:
 ## 🚀 Quick Start
 
 ### 1. Setup
+
 ```bash
 cd /path/to/indicators
 source DC/bin/activate  # Activate virtual environment
@@ -174,12 +194,14 @@ pip install -r requirements.txt
 ```
 
 ### 2. Configure
+
 ```bash
 cp .env.example .env
 # Edit .env with your API keys
 ```
 
 ### 3. Run Data Collection
+
 ```bash
 # Financial data (new workflow)
 python alphadata.py                    # Collect raw data + market cap
@@ -190,6 +212,7 @@ python fix_market_cap.py             # Fix market cap data
 ```
 
 ### 4. Test International Companies (Optional)
+
 ```bash
 python test_international_symbols.py
 ```
@@ -210,16 +233,19 @@ After running all scripts, you'll have:
 ### Common Issues
 
 **API Rate Limits**:
+
 - Financial data: 75 calls/minute (premium tier)
 - News data: 75 calls/minute (premium tier)
 - Scripts handle rate limiting automatically
 
 **Missing Data**:
+
 - Some international companies may not have data
 - News coverage varies by company size and industry
 - Scripts log missing data and continue processing
 
 **Ticker Format Issues**:
+
 - Use `test_international_symbols.py` to find correct formats
 - Update ticker mappings in `news_collector.py` as needed
 
@@ -235,10 +261,12 @@ After running all scripts, you'll have:
 ## 🔄 Recent Modifications
 
 ### Data Collection & Calculation Separation (Latest Update)
+
 **Modified**: `alphadata.py` - Split into data collection and calculation phases
 
 **Changes Made**:
-1. **`alphadata.py`**: 
+
+1. **`alphadata.py`**:
    - ✅ Removed `calculate_metrics()` function
    - ✅ Now saves only raw API data + historical market cap
    - ✅ Faster execution (no calculation overhead during API calls)
@@ -251,6 +279,7 @@ After running all scripts, you'll have:
    - ✅ Saves to `calculated_data/` directory with timestamp
 
 **Benefits**:
+
 - 🚀 Faster data collection (API calls only)
 - 🔧 Flexible metrics calculation (can modify without re-fetching)
 - 🐛 Better debugging (separate data vs calculation issues)
