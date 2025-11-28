@@ -8,7 +8,7 @@ import pandas as pd
 import numpy as np
 
 
-DEFAULT_GROUP_LABEL = "Non-AI / Control Group"
+DEFAULT_GROUP_LABEL = "Non-AI"
 
 
 def read_group_map(group_map_csv: str) -> pd.DataFrame:

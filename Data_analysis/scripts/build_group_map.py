@@ -10,12 +10,11 @@ from pathlib import Path
 DATA_DIR = "/Users/k./Documents/projects/AI_Bubble/ai-bubble-research/Data_preparation/datasets/final_data"
 OUTPUT_CSV = "/Users/k./Documents/projects/AI_Bubble/ai-bubble-research/Data_analysis/mappings/group_map.csv"
 
-# User-provided groups
-PURE_PLAY_AI = {
-    "CGNX", "CRWV", "PLTR", "PONY", "SOUN", "SYM", "TEMP", "WRD"
-}
-
-AI_EXPOSED = {
+# User-provided groups (combined Pure-Play AI and AI-Exposed into single AI group)
+AI = {
+    # Pure-Play AI companies
+    "CGNX", "CRWV", "PLTR", "PONY", "SOUN", "SYM", "TEMP", "WRD",
+    # AI-Exposed / Big Tech companies
     "000660 KS", "000660.KS", "005930 KS", "005930.KS", "6526 JP", "6526.JP",
     "700 HK", "0700.HK", "ADBE", "ALAB", "AMD", "AMZN", "ANET", "APP", "ARM",
     "ASML", "AVGO", "BABA", "BIDU", "BZ", "CRM", "DOCU", "EPAM", "FB", "META",
@@ -50,15 +49,13 @@ def assign_group(ticker: str) -> str:
     """Assign ticker to group based on user-provided lists."""
     ticker_clean = ticker.strip()
     
-    if ticker_clean in PURE_PLAY_AI:
-        return "Pure-Play AI"
-    elif ticker_clean in AI_EXPOSED:
-        return "AI-Exposed / Big Tech"
+    if ticker_clean in AI:
+        return "AI"
     elif ticker_clean in NON_AI:
-        return "Non-AI / Control Group"
+        return "Non-AI"
     else:
         # Default to Non-AI for unmapped tickers
-        return "Non-AI / Control Group"
+        return "Non-AI"
 
 def main():
     print("Extracting tickers from Excel files...")

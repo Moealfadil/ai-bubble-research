@@ -6,9 +6,8 @@ def set_theme() -> None:
 
 
 PALETTE = {
-    "Pure-Play AI": "#d62728",  # red
-    "AI-Exposed / Big Tech": "#1f77b4",  # blue
-    "Non-AI / Control Group": "#2ca02c",  # green
+    "AI": "#1f77b4",  # blue
+    "Non-AI": "#2ca02c",  # green
 }
 
 
