@@ -4,7 +4,7 @@ This repository contains the code, data artifacts, notebooks, and reports for a 
 
 <!-- markdownlint-disable MD033 -->
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Moealfadil/ai-bubble-research/results/assests/AI_bubble.png" alt="AI Bubble Overview" style="max-width: 100%; width: 100%; height: auto;"/>
+  <img src="https://raw.githubusercontent.com/Moealfadil/ai-bubble-research/results/assests/AI_bubble.png" alt="AI Bubble Overview" style="max-width: 100%; width: 100%; height: auto; max-height: 400px; object-fit: contain;"/>
 </p>
 <!-- markdownlint-enable MD033 -->
 
