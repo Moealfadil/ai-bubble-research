@@ -2,6 +2,7 @@
 
 This repository contains the code, data artifacts, notebooks, and reports for a quantitative study comparing valuation, performance, fundamentals and risk between AI-focused companies and other technology firms.
 
+![AI Bubble Overview](https://raw.githubusercontent.com/Moealfadil/ai-bubble-research/results/assests/AI_bubble.png)
 ## Project overview
 
 The goal of this project is to evaluate whether a distinct "AI" equity bubble exists by comparing AI-labelled companies to a peer set of Non-AI technology companies across multiple dimensions: price performance, valuation multiples, fundamental performance, valuation-to-fundamentals links, risk indicators, and lifecycle (age) stratification. The analysis covers quarterly financial data from 2015 through 2025 and includes 153 companies.
